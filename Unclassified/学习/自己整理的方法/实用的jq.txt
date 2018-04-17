@@ -1,0 +1,35 @@
+更换class类型。
+ $(".aa:odd").removeClass().addClass("BB");
+
+
+加载时 使用的方法
+$(document).ready(function(){
+  $(".intro").css("background-color","yellow");
+});
+
+
+获取class 的值
+$('#demo').attr('class');
+更换src属性的值
+$("#bodyRightImg").attr('src',"c:/img/mm.jpg"); 
+
+
+把滚动条制顶
+$('#bodyRight').animate({'scrollTop':0});
+
+//兼容ios 回退按钮（返回）
+function back() {
+	if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
+		window.location.href = window.document.referrer;
+	} else { 
+		window.history.go("-1"); 
+	}
+}
+
+
+
+
+
+
+
+

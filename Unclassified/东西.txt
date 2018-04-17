@@ -1,0 +1,19 @@
+一些 东西以防忘记
+一、提示信息和代码编号 放到 专门的Constant类管理
+
+二、在Controller 层 前面可以封装BaseController
+使用 @initBinder
+可以进行一些预先处理
+1.防止XSS攻击
+2.可以同意转换 数据格式（例如 时间yyyy-MM-dd）
+
+
+三、js 中md5加密 中文需要转换，utf-8
+
+
+四、!important 可以保证css样式不被覆盖
+
+dubbo
+
+
+

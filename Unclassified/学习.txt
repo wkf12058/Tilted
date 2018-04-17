@@ -1,0 +1,22 @@
+xss(跨站脚本攻击)
+
+跨站脚本攻击(Cross Site Scripting) ，恶意攻击者往Web页面里插入恶意Script代码
+
+
+在HTML 中
+
+<script type="text/javascript" src="/js/ibanner.js"></script>
+<script type="text/javascript" src="js/ibanner.js"></script>
+
+加“/”是代表绝对路径，不加“/”是代表相对路径。
+
+
+
+判断页面是在移动端还是pc端打开
+if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    window.location.href = "https://www.baidu.com/";
+} else {
+    window.location.href = "http://news.baidu.com/";
+}
+
+window.location.href = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ? "https://www.baidu.com/" :  "http://news.baidu.com/";

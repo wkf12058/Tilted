@@ -1,0 +1,28 @@
+滚动条到底部的时候触发事件    
+ <script type="text/javascript">
+	$("#bodyRight").scroll(function(){
+	  var scrollTop = $(this).scrollTop();
+	  var scrollHeight = $("#bodyRightImg").height();
+	  var windowHeight = $(this).height();
+	  //alert(scrollTop+"+"+windowHeight+"="+scrollHeight);
+	  if(scrollHeight-(scrollTop + windowHeight) <5 ){
+	  	 nextScroll();
+	  }
+	});
+	function nextScroll(){
+		var flag=0;
+	  	$("div").each(function(){
+	  		if(flag==1){
+	  			if($(this).attr('class')=="imgDiv1"){
+	  				$('#bodyRight').animate({'scrollTop':0});
+	  				$(this).click();
+		  			return false ;
+	  			}
+	  			flag==0;
+	  		}
+	  		if($(this).attr('class')=="imgDiv2"){
+	  			flag=1;
+	  		}
+		 });
+	}
+  </script>

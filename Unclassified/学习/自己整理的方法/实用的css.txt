@@ -1,0 +1,32 @@
+/* 背景图片自适应 */
+.bg{  
+  background-image: url(../images/1.jpg);//此为图片地址  
+  background-size: 100% 100%;  
+  background-repeat: no-repeat;
+
+}
+
+/* 隐藏控件 */
+div{  
+   /*不占位隐藏*/
+   display: none;
+   /*占位隐藏*/
+   visibility: hidden;	
+   /*全透明*/
+   opacity: 0;
+   /*定位脱离界面*/
+   position: absolute;left: -1000px;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
