@@ -1,6 +1,7 @@
 
-
 var choiceList=new Array();
+
+var frame_left = 0
 
 function TiMu(){
 	
@@ -18,7 +19,7 @@ function TiMu(){
 		
 		var divli1 = document.createElement("div");
 		divli1.innerHTML = parseInt(i) + 1;
-		var timu = 1
+		var timu = data1.length;
 		//渲染选项
 		for(var j in data1[i].xuanxiang){
 			var div3 = document.createElement("div");
@@ -45,9 +46,9 @@ function TiMu(){
 			div3.appendChild(div3_id)
 			div3.appendChild(div4);
 			document.querySelectorAll(".entrance-bottom-frame-line")[i].appendChild(div3);
-			timu++
+			
 		}
-
+		
 	}
 	var lastDiv = document.createElement("div");
 	lastDiv.className = "entrance-bottom-frame-line";
@@ -61,11 +62,10 @@ function TiMu(){
 	addClass(dact, active)
 	var timu_id = 0
 	var select1 = 1
-	var frame_left = 0
 	
 	document.querySelector(".entrance-bottom-frame").style.marginLeft = frame_left + "%"
 	document.querySelector(".topic-frameli").innerHTML = "第 " + "<div>" + select1 + "</div>" + "/" + timu + " 题"
-	
+	console.log(timu);
 	//设置按键事件
 	for(var i = 0;i<document.querySelectorAll(".entrance-bottom-frame-line-button").length;i++){
 		document.querySelectorAll(".entrance-bottom-frame-line-button")[i].onclick = function(){
@@ -76,8 +76,7 @@ function TiMu(){
 				document.querySelector(".topic-frameli").innerHTML = "第 " + "<div>" + select1 + "</div>" + "/" + timu + " 题"
 			}else{
 				document.querySelector(".topic-frameli").innerHTML = "结算"
-				document.getElementById("balance").innerHTML = "总分：10分"
-				console.log(choiceList);
+				document.getElementById("balance").innerHTML = "总分："+compute();
 			}
 			//切换效果
 			frame_left += -100
@@ -118,8 +117,33 @@ function hasClass(obj, cls){
 }
 
 
+//上一题
+function last(){
+	frame_left += 100
+	document.querySelector(".entrance-bottom-frame").style.marginLeft = frame_left + "%"
+}
 
-var data1 =[ {
+//下一题
+function next(){
+	frame_left += -100
+	document.querySelector(".entrance-bottom-frame").style.marginLeft = frame_left + "%"
+
+}
+
+//计算分数
+function compute(){
+	let count=0;
+	for (let i=0;i<data1.length;i++) {
+		console.log(data1[i].answer+":"+choiceList[i])
+		if(data1[i].answer==choiceList[i]){
+			count++;
+		}
+	}
+	return count;
+}
+
+var data={};
+var data1=[ {
              "id" : "1",  
              "title": "1. 众所周知我们所处的宇宙的质能公式是E=mc2，其中c是真空中的光速，和我们的宇宙平行的另一个宇宙meta，研究显示他们使用的质能公式是E=(2+√3)m，当一个物体质量m很大的时候，对应的能量E非常大，数据也非常的长，但meta宇宙里面的智慧生物只愿意把E取整，然后记录对应的能量E的最后一位整数，比如m=0时，他们会记录1，m=1时，他们会记录3。m=2的时候，他们会记录3。现在请问当m=100时，他们会记录多少？",  
             
@@ -128,7 +152,8 @@ var data1 =[ {
              				"int",
              				"char",
              				"void",
-             				]
+             				],
+             "answer":"A",
 	
         },{  
              "id" : "2",  
@@ -139,7 +164,8 @@ var data1 =[ {
              				"ClassCastException",
              				"FileNotFoundException",
              				"IndexOutOfBoundsException",
-             				]
+             				],
+             "answer":"A",
         },{  
              "id" : "3",  
              "title": "编译和运行下面代码时显示的结果是（）",  
@@ -149,7 +175,8 @@ var data1 =[ {
              				"ClassCastException",
              				"FileNotFoundException",
              				"IndexOutOfBoundsException",
-             				]
+             				],
+             "answer":"A",
         },{  
              "id" : "4",  
              "title": "编译和运行下面代码时显示的结果是（）",  
@@ -159,7 +186,8 @@ var data1 =[ {
              				"ClassCastException",
              				"FileNotFoundException",
              				"IndexOutOfBoundsException",
-             				]
+             				],
+             "answer":"A",
         },{  
              "id" : "5",  
              "title": "编译和运行下面代码时显示的结果是（）",  
@@ -169,8 +197,43 @@ var data1 =[ {
              				"ClassCastException",
              				"FileNotFoundException",
              				"IndexOutOfBoundsException",
-             				]
+             				],
+             "answer":"A",
         }
         ];
         
+        //获取题目信息
+        function getProblem(){
+        	let url="http://127.0.0.1:8080/user/test";
+        	let param={userId:"123"};
+        	$.ajax({
+        		type: "POST",
+        		url: url,
+        		data: param,
+        		success: function(data){
+        			//data1=data.data;
+        			TiMu();
+        		},
+        		error:function(e){
+        			console.log(e.responseText);
+        		}
+        	});
+        }
+        
+        //提交成绩
+        function submit(){
+        	let url="http://127.0.0.1:8080/user/test";
+        	let param={userId:"123"};
+        	$.ajax({
+        		type: "POST",
+        		url: url,
+        		data: param,
+        		success: function(data){
+        			console.log(data1);
+        		},
+        		error:function(e){
+        			console.log(e.responseText);
+        		}
+        	});
+        }
 

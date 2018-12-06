@@ -20,13 +20,18 @@
 				</div>
 				</div>
 			</div>
-
+			
+			<button onclick="getProblem()">获取题目</button>
+			<button onclick="last()">上一题</button>
+			<button onclick="next()">下一题</button>
 		</div>
 	</body>
+	<script src="assets/js/jquery-3.2.1.js"></script> 
 	<script src="assets/js/index.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		window.onload = function() {
-			TiMu()
+			getProblem();
+			//TiMu()
 		}
 	</script>
 
