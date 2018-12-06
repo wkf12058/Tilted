@@ -204,14 +204,15 @@ var data1=[ {
         
         //获取题目信息
         function getProblem(){
-        	let url="http://127.0.0.1:8080/user/test";
+        	let url="http://127.0.0.1:8080/solo/problem/getList";
         	let param={userId:"123"};
         	$.ajax({
         		type: "POST",
         		url: url,
         		data: param,
         		success: function(data){
-        			//data1=data.data;
+        			console.log(data);
+        			data1=data.data;
         			TiMu();
         		},
         		error:function(e){
@@ -222,7 +223,7 @@ var data1=[ {
         
         //提交成绩
         function submit(){
-        	let url="http://127.0.0.1:8080/user/test";
+        	let url="http://127.0.0.1:8080/solo/problem/getList";
         	let param={userId:"123"};
         	$.ajax({
         		type: "POST",
