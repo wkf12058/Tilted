@@ -1,7 +1,16 @@
 
+//选择的答案
 var choiceList=new Array();
-
+//正确答案
+var rightList=new Array();
+//id
+var idList=new Array();
+//平移位置
 var frame_left = 0
+
+var mydate = new Date();
+var sign= mydate.getFullYear()+""+(mydate.getMonth()+1)+""+mydate.getDate();
+
 
 function TiMu(){
 	
@@ -75,8 +84,10 @@ function TiMu(){
 				select1++;
 				document.querySelector(".topic-frameli").innerHTML = "第 " + "<div>" + select1 + "</div>" + "/" + timu + " 题"
 			}else{
+				let score =compute();
 				document.querySelector(".topic-frameli").innerHTML = "结算"
-				document.getElementById("balance").innerHTML = "总分："+compute();
+				document.getElementById("balance").innerHTML = "总分："+score;
+				submit(score); 
 			}
 			//切换效果
 			frame_left += -100
@@ -134,7 +145,8 @@ function next(){
 function compute(){
 	let count=0;
 	for (let i=0;i<data1.length;i++) {
-		console.log(data1[i].answer+":"+choiceList[i])
+		rightList.push(data1[i].answer);
+		idList.push(data1[i].id);
 		if(data1[i].answer==choiceList[i]){
 			count++;
 		}
@@ -205,15 +217,23 @@ var data1=[ {
         //获取题目信息
         function getProblem(){
         	let url="http://127.0.0.1:8080/solo/problem/getList";
-        	let param={userId:"123"};
+        	let param={
+        		userId:window.userId,
+        		sign:sign,
+        		};
         	$.ajax({
         		type: "POST",
         		url: url,
         		data: param,
         		success: function(data){
         			console.log(data);
-        			data1=data.data;
-        			TiMu();
+        			if(data.data!=""){
+        				data1=data.data;
+        				TiMu();
+        			}else{
+        				alert("没有题目");
+        			}
+
         		},
         		error:function(e){
         			console.log(e.responseText);
@@ -222,9 +242,18 @@ var data1=[ {
         }
         
         //提交成绩
-        function submit(){
-        	let url="http://127.0.0.1:8080/solo/problem/getList";
-        	let param={userId:"123"};
+        function submit(score){
+        	let url="http://127.0.0.1:8080/solo/problem/submitAssets";
+        	let answerList=choiceList.join(',');
+        	let problemIdList=idList.join(',');
+        	let param={
+        		userId:window.userId,
+        		answer:answerList,
+        		problemId:problemIdList,
+        		score:score,
+        		sign:sign,
+        		};
+        		console.log(param);
         	$.ajax({
         		type: "POST",
         		url: url,

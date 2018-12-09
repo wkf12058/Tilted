@@ -12,39 +12,95 @@
 	</head>
 
 	<body>
-		<div class="aui-content aui-margin-b-15" style="padding: 50% 0px;">
+		<div class="aui-content aui-margin-b-15" style="padding: 40% 0px;">
 	        <ul class="aui-list aui-form-list">
-	        	<div class="aui-row" style="color: #00bcd4;text-align: center;font-size: 30px;">
-	        		登录
+	        	<div class="aui-row" style="color: #00bcd4;text-align: center;font-size: 25px;padding: 10px;">
+	        		信息登记
 	        	</div>
-	            <li class="aui-list-item" style="padding: 0px 10px;">
-	                <div class="aui-list-item-inner">
-	                    <div class="aui-list-item-label-icon">
-	                        <i class="aui-iconfont aui-icon-mobile"></i>
-	                    </div>
-	                    <div class="aui-list-item-input">
-	                        <input type="text" placeholder="username">
-	                    </div>
-	                </div>
-	            </li>
-	            <li class="aui-list-item" style="padding: 0px 10px;">
-	                <div class="aui-list-item-inner">
-	                    <div class="aui-list-item-label-icon">
-	                        <i class="aui-iconfont aui-icon-lock"></i>
-	                    </div>
-	                    <div class="aui-list-item-input">
-	                        <input type="password" placeholder="password">
-	                    </div>
-	                    <div class="aui-list-item-label-icon">
-	                        <i class="aui-iconfont aui-icon-display"></i>
-	                    </div>
-	                </div>
-	            </li>
+				<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label"> 电话</div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" id="phone"  placeholder="请输入电话">
+		                </div>
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label">姓名</div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" id="name"  placeholder="请输入名称">
+		                </div>
+		            </div>
+		        </li>
+				<li class="aui-list-item">
+		            <div class="aui-list-item-inner">
+		                <div class="aui-list-item-label"> 售点</div>
+		                <div class="aui-list-item-input">
+		                    <input type="text" id="address"  placeholder="请输入售点">
+		                </div>
+		            </div>
+		        </li>
 	           <li class="aui-list-item" style="padding: 20px 30px;">
-	            	<div class="aui-btn aui-btn-primary aui-btn-block aui-btn-outlined aui-btn-sm">登录(primary)</div>
+	            	<div class="aui-btn aui-btn-primary aui-btn-block aui-btn-outlined aui-btn-sm" onclick="register()">开始答题</div>
 	            </li>
 	        </ul>
 	    </div>
 	</body>
+	<script src="../assets/js/jquery-3.2.1.js"></script> 
+	<script>
+		let openId=getQueryVariable("openId");
+		console.log(openId);
+		
+		//设置全局变量
+		window.openId=openId;
+		
+		//获取参数
+		function getQueryVariable(variable){
+	       var query = window.location.search.substring(1);
+	       var vars = query.split("&");
+	       for (var i=0;i<vars.length;i++) {
+	            var pair = vars[i].split("=");
+	            if(pair[0] == variable){return pair[1];}
+	       }
+	       return(false);
+		}
+		
+		function register(){
+			let url="http://127.0.0.1:8080/solo/problem/register";
+			if($("#phone").val()==""){
+				alert("手机为空");
+				return ;
+			}
+			if($("#address").val()==""){
+				alert("售点为空");
+				return ;
+			}
+			if($("#name").val()==""){
+				alert("姓名为空");
+				return ;
+			}
+        	let param={
+        		openId:openId,
+        		phone:$("#phone").val(),
+        		address:$("#address").val(),
+        		name:$("#name").val(),
+        		};
+        		console.log(param);
+        	$.ajax({
+        		type: "POST",
+        		url: url,
+        		data: param,
+        		success: function(data){
+        			console.log(data);
+        			window.userId=data.data;
+        			window.location.href="./index.html"
+        		},
+        		error:function(e){
+        			console.log(e.responseText);
+        		}
+        	});
+		}
+	</script>
 
 </html>
