@@ -233,7 +233,6 @@ var data1=[ {
         			}else{
         				alert("没有题目");
         			}
-
         		},
         		error:function(e){
         			console.log(e.responseText);
